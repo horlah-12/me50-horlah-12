@@ -1,0 +1,40 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Active Listings</h2>
+
+    <div class="listings-grid">
+        {% for listing in listings %}
+            <div class="listing-card">
+                {% if listing.image_url %}
+                    <img src="{{ listing.image_url }}" alt="{{ listing.title }}" class="listing-image">
+                {% endif %}
+
+                <div class="listing-details">
+                    <h3>
+                        <a href="{% url 'listing' listing_id=listing.id %}">{{ listing.title }}</a>
+                    </h3>
+                    <p>{{ listing.description }}</p>
+                    <p><strong>Current Bid:</strong> ${{ listing.current_price }}</p>
+                    {% if listing.category %}
+                        <p><strong>Category:</strong> {{ listing.category }}</p>
+                    {% endif %}
+                    <p><strong>Created by:</strong> {{ listing.owner.username }}</p>
+                    <p><strong>Created:</strong> {{ listing.created_at }}</p>
+                    {% if user.is_authenticated %}
+                        {% if listing.id in watchlist_listing_ids %}
+                            <span class="btn btn-secondary disabled">In Watchlist</span>
+                        {% else %}
+                            <form method="post" action="{% url 'add_to_watchlist' listing_id=listing.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">Add to Watchlist</button>
+                            </form>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        {% empty %}
+            <p>No active listings.</p>
+        {% endfor %}
+    </div>
+{% endblock %}
