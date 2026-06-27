@@ -1,0 +1,1 @@
+A hardworker is a determined and principled person striving to achieve a goal

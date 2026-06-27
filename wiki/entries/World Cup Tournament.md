@@ -1,0 +1,1 @@
+This is a tournament been hosted every 4years, currently co-hosted by Mexico, Canada and the United State of America and its been tough and under expectation so far
